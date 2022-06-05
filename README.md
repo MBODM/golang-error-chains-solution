@@ -5,7 +5,7 @@ Simple sample code, for a StackOverflow question about error-chains in Go.
 https://stackoverflow.com/questions/72505935/fmt-println-stops-printing-chain-at-wrapped-custom-error-golang
 
 #### Solution:
-The solution, how to handle error-chains containg a custom error, is
+The solution, how to handle error-chains containg a custom error, is:
 ```golang
 type CustomError struct {
 	Msg string
@@ -26,4 +26,4 @@ func (e *CustomError) Unwrap() error {
 }
 ```
 
-This makes it possible, when using wrapped errors in an error-chain, to filter out a single custom error at top (in `main()` function) and show this custom error's msg, while at the same time not loosing all wrapped error messages, that shows up when doing a `fmt.Println(topLevelErr)` at the top.
+This makes it possible, when using wrapped errors in an error-chain, to filter out a single custom-error at top (in `main()` function) and show this custom-error's msg, while at the same time not loosing all wrapped error messages, that all shows up when doing a `fmt.Println(topLevelErr)` at the top.
