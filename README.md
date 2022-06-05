@@ -26,4 +26,23 @@ func (e *CustomError) Unwrap() error {
 }
 ```
 
-This makes it possible, when using wrapped errors in an error-chain, to filter out a single custom-error at top (in `main()` function) and show this custom-error's msg, while at the same time not loosing all wrapped error messages, that all shows up when doing a `fmt.Println(topLevelErr)` at the top.
+This makes it possible, when using wrapped errors in an error-chain, to filter out a single custom-error at top (in `main()` function) and show this custom-error's msg, while at the same time not loosing all wrapped error messages, that all shows up when doing a `fmt.Println(topLevelErr)` at the top:
+```golang
+func printAllWrappedErrors(topLevelError error) {
+	fmt.Println(topLevelError)
+}
+
+func printCustomError(topLevelError error) {
+	var e *CustomError
+	if errors.As(topLevelError, &e) {
+		fmt.Println(e.Msg) // <-- This is the difference
+	}
+}
+
+func printCustomErrorIncludingAllBelow(topLevelError error) {
+	var e *CustomError
+	if errors.As(topLevelError, &e) {
+		fmt.Println(e) // <-- This is the difference
+	}
+}
+```
