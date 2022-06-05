@@ -5,7 +5,7 @@ Simple sample code, for a StackOverflow question about error-chains in Go.
 https://stackoverflow.com/questions/72505935/fmt-println-stops-printing-chain-at-wrapped-custom-error-golang
 
 #### Solution:
-The solution, how to handle error-chains containg a custom-error, is:
+The solution, how to do some flexible handling of error-chains containg a custom-error, is:
 ```golang
 type CustomError struct {
 	Msg string
