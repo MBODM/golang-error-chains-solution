@@ -32,14 +32,14 @@ func printAllWrappedErrors(topLevelError error) {
 	fmt.Println(topLevelError)
 }
 
-func printCustomError(topLevelError error) {
+func printCustomErrorOnly(topLevelError error) {
 	var e *CustomError
 	if errors.As(topLevelError, &e) {
 		fmt.Println(e.Msg) // <-- This is the difference
 	}
 }
 
-func printCustomErrorIncludingAllBelow(topLevelError error) {
+func printCustomErrorIncludingAllWrappedErrors(topLevelError error) {
 	var e *CustomError
 	if errors.As(topLevelError, &e) {
 		fmt.Println(e) // <-- This is the difference
