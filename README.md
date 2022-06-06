@@ -46,3 +46,8 @@ func printCustomErrorIncludingAllWrappedErrors(topLevelError error) {
 	}
 }
 ```
+
+#### Requirements:
+You need at least Go 1.13 (released September 2019), when the error-chains/error-wrapping feature was added.
+
+##### Have fun.
