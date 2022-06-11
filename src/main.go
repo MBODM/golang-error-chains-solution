@@ -12,12 +12,12 @@ type CustomError struct {
 
 func (e *CustomError) Error() string {
 	if e.Err != nil {
-                // Added a ':' char here, because fmt.Errorf() does NOT
-                // automatically add this (as i accidentally thought) !
+		// Added a ':' char here, because fmt.Errorf() does NOT
+		// automatically add this (as i accidentally thought) !
 		wrappedError := fmt.Errorf("%s: %w", e.Msg, e.Err)
 		wrappedErrorMsg := wrappedError.Error()
 		return wrappedErrorMsg
-		// Also you can do this instead (as most golib stuff do):
+		// Also you can do this instead (like most go-lib pkgs):
 		// return e.Msg + ": " + e.Err.Error()
 	}
 	return e.Msg
@@ -28,17 +28,17 @@ func (e *CustomError) Unwrap() error {
 }
 
 func main() {
-	level1Err := errors.New("[Error in L1]: Boom")
-	level2Err := fmt.Errorf("[Error in L2]: Wrap L1Err %w", level1Err)
-	level3Err := &CustomError{"[Error in L3]: Wrap L2Err", level2Err}
-	level4Err := fmt.Errorf("[Error in L4]: Wrap L3Err %w", level3Err)
+	level1Err := errors.New("L1-Boom")
+	level2Err := fmt.Errorf("L2-Ouch: %w", level1Err) // <-- Remember: fmt.Errorf() NOT adds a ':' by it´s own!
+	level3Err := &CustomError{"L3-Wank", level2Err}
+	level4Err := fmt.Errorf("L4-Toot: %w", level3Err) // <-- Remember: fmt.Errorf() NOT adds a ':' by it´s own!
 	printAllWrappedErrors(level4Err)
 	printCustomErrorOnly(level4Err)
 	printCustomErrorIncludingAllWrappedErrors(level4Err)
 	// Console output:
-	// Print1 --> [Error in L4]: Wrap L3Err [Error in L3]: Wrap L2Err [Error in L2]: Wrap L1Err [Error in L1]: Boom
-	// Print2 --> [Error in L3]: Wrap L2Err
-	// Print3 --> [Error in L3]: Wrap L2Err [Error in L2]: Wrap L1Err [Error in L1]: Boom
+	// Print1 --> L4-Toot: L3-Wank: L2-Ouch: L1-Boom
+	// Print2 --> L3-Wank
+	// Print3 --> L3-Wank: L2-Ouch: L1-Boom
 }
 
 func printAllWrappedErrors(topLevelError error) {
