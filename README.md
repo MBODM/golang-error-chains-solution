@@ -14,7 +14,7 @@ type CustomError struct {
 
 func (e *CustomError) Error() string {
 	if e.Err != nil {
-		// This is the way, most golib stuff wraps the error messages:
+		// This is the way, how most golib stuff wraps the error messages:
 		return e.Msg + ": " + e.Err.Error()
 	}
 	return e.Msg
