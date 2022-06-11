@@ -14,11 +14,8 @@ type CustomError struct {
 
 func (e *CustomError) Error() string {
 	if e.Err != nil {
-                // Added a ':' char here, because fmt.Errorf() does NOT
-                // automatically add this (as i accidentally thought) !
-		wrappedError := fmt.Errorf("%s: %w", e.Msg, e.Err)
-		wrappedErrorMsg := wrappedError.Error()
-		return wrappedErrorMsg
+		// This is the way, most golib stuff wraps the error messages:
+		return e.Msg + ": " + e.Err.Error()
 	}
 	return e.Msg
 }
