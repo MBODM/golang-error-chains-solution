@@ -14,7 +14,7 @@ type CustomError struct {
 
 func (e *CustomError) Error() string {
 	if e.Err != nil {
-		wrappedError := fmt.Errorf("%s %w", e.Msg, e.Err)
+		wrappedError := fmt.Errorf("%s: %w", e.Msg, e.Err)
 		wrappedErrorMsg := wrappedError.Error()
 		return wrappedErrorMsg
 	}
