@@ -17,6 +17,8 @@ func (e *CustomError) Error() string {
 		wrappedError := fmt.Errorf("%s: %w", e.Msg, e.Err)
 		wrappedErrorMsg := wrappedError.Error()
 		return wrappedErrorMsg
+		// As most golib stuff do, you can also do this:
+		// return e.Msg + ": " + e.Err.Error()
 	}
 	return e.Msg
 }
